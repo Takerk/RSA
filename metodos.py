@@ -1,4 +1,31 @@
-archivo=open("holah.jpg")
+import random
+
+archivo=open("primos.txt")
+lineas=len(open("primos.txt").readlines())
+
+print(lineas)
+plinea=random.randrange(268)
+qlinea=random.randrange(268)
+while(plinea==qlinea):
+     qlinea=random.randrange(268)
+
+
+print(plinea)
+print(qlinea)
+
+for i in range(lineas):
+     if i==plinea:
+          p=archivo.next()
+     else:
+          if i==qlinea:
+               q=archivo.next()
+          else:
+               archivo.next()
+archivo.close()
+
+print('Numero p y q: ')
+print(p)
+print(q)
 
 
 def listabinario(decimal):
