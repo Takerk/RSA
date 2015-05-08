@@ -15,6 +15,31 @@ def gcd(e,phi):
         y = int(x)
         return gcd(phi,r)
 
+def eea(phi,e):
+    listaPhi=[]
+    listaE=[]
+    listaR=[]
+    listaPhi.append(phi)
+    listaE.append(e)
+    r=1
+    
+    while(r!=0):
+        r = phi % e
+        listaR.append(r)
+        phi= e
+        e = r
+        listaPhi.append(phi)
+        listaE.append(e)
+    x = 0
+    gh = -len(listaPhi)
+    i=-2
+    while(i>=gh):
+        a = listaPhi[i]
+        b = listaE[i]
+        y =  (-(a*x)+1)/b
+        x = y
+        i = i -1
+    return y
 
 a = 79
 b = 3220
