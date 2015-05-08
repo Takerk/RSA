@@ -1,4 +1,5 @@
 
+archivo=open("primos.txt","w+")
 
 def esprimo(numero):
     contador=0
@@ -14,49 +15,23 @@ def esprimo(numero):
     else:
         return 0
 
-limite=50000000
-inicio=1000000
-
-print('Generacion de p y q, ambos primos')
-p=0
-q=0
-#print(esprimo(999769))
-#encontrado=0
-#n=inicio
-#while(n<=limite):
- #   if esprimo(n):
-  #      encontrado=n
-   #     print(encontrado)
-    #n=n+1
-
-def listabinario(decimal):
-    lista=[]
-    binario=bin(decimal)
-    for i in binario:
-        lista.append(i)
-    del lista[0]
-    del lista[0]
-    return lista
+limite=20000100
+inicio=19999900
 
 
-lbinario=listabinario(10949)
-print(lbinario)
-n=27641
+def generarprimos():
+    encontrado=0
+    n=inicio
+    while(n<=limite):
+       if esprimo(n):
+            encontrado=n
+            archivo.write(str(encontrado)+"\n")
+            print(encontrado)
+       n=n+1
+    archivo.close()
 
-def powermod(numero):
-    base=numero
-    del lbinario[0]
-    for i in lbinario:
-        if i=='1':
-            print("entro a 1")
-            numero=(numero*numero*base)%n
-        else:
-            print("entro a 0")
-            numero=(numero*numero)%n
-        print("el valor de i es: " ,i ," el numero es: ",numero)
-    return numero
 
-print(powermod(45))
+generarprimos()
 
 
 
