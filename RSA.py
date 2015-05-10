@@ -67,13 +67,16 @@ def main():
     print 'Bienvenido al sistema de encriptación RSA \n    Por favor seleccione una opción'
     print '\n1.Encriptar \n2.Desencripar \n3.Salir'
     menu = {'1': 'Encriptar', '2': 'Desencriptar', '3': 'Salir'}
-    T= int (sys.stdin.readline())
-    if (T == 1):
+    T= sys.stdin.readline()
+    if (T == '1'):
         encriptar()
-    elif (T== 2):
+    elif (T== '2'):
         desencriptar()
-    else:
+    elif (T== '3'):
         print 'Hasta pronto :D'
+    else:
+        print 'Opcion inválida\nIntente de nuevo \n\n'
+        main()
 
 def test():   
     a = 79
