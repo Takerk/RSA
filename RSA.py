@@ -57,6 +57,13 @@ def eea(phi,e):
     return y
 
 def encriptar():
+    tp=[]
+    textoPlano = []
+    print 'Ingrese el texto que desea cifrar \nInstrucciones: ingrese los números separados entre sí por un espacio \nalterminar de ingresar el mensaje presione enter y obtendrá un mensaje cifrado.'
+    tp = sys.stdin.readline().strip().split()
+    for i in range(len(tp)):
+        textoPlano.append(int(tp[i]))                    
+    print textoPlano
     generarLlave()
     print 'AQUI SE VA A ENCRIPTAR'
 
@@ -64,18 +71,24 @@ def desencriptar():
     print 'AQUI SE VA A DESENCRITAR'
 
 def main():
-    print 'Bienvenido al sistema de encriptación RSA \n    Por favor seleccione una opción'
-    print '\n1.Encriptar \n2.Desencripar \n3.Salir'
-    menu = {'1': 'Encriptar', '2': 'Desencriptar', '3': 'Salir'}
-    T= sys.stdin.readline()
-    if (T == '1'):
-        encriptar()
-    elif (T== '2'):
-        desencriptar()
-    elif (T== '3'):
-        print 'Hasta pronto :D'
-    else:
-        print 'Opcion inválida\nIntente de nuevo \n\n'
+    try:
+        print '\nBienvenido al sistema de encriptación RSA \n    Por favor seleccione una opción'
+        print '\n1.Encriptar \n2.Desencripar \n3.Salir'
+        menu = {'1': 'Encriptar', '2': 'Desencriptar', '3': 'Salir'}
+        T= int(sys.stdin.readline())
+        if (T==1):
+            encriptar()
+            main()
+        elif (T==2):
+            desencriptar()
+            main()
+        elif (T==3):
+            print 'Hasta pronto :D'
+        else:            
+            print 'Opcion inválida\nIntente de nuevo \n\n'
+            main()
+    except ValueError:
+        print'Opción inválida\nIntente denuevo \n\n'
         main()
 
 def test():   
@@ -87,4 +100,3 @@ def test():
     print 'Algoritomo extendido de Euclides', z
 
 main()
-
