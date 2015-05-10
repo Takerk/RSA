@@ -1,8 +1,23 @@
-def keyGenerator():
+import sys
+import random
+
+def generarLlave():
     p = 47
     q = 71
     n = p * q
     phi = (p-1)*(q-1)
+    e = aleatorioE(phi)
+    d = eea(phi,e)
+    print 'Llave pública: (',e,',',n,')'
+    print 'Llave privada: (',d,',',n,')'
+
+def aleatorioE(phi):
+    e = random.randint(2,(phi-1))
+    g = gcd(e,phi)
+    if(g!= True):
+        return aleatorioE(phi)
+    else:
+        return e
     
 def gcd(e,phi):
     r = e % phi
@@ -41,11 +56,32 @@ def eea(phi,e):
         i = i -1
     return y
 
-a = 79
-b = 3220
+def encriptar():
+    generarLlave()
+    print 'AQUI SE VA A ENCRIPTAR'
 
-w = gcd(a,b)
-print 'Primos relativos ' , w
+def desencriptar():
+    print 'AQUI SE VA A DESENCRITAR'
 
-z = eea(b,a)
-print 'Algoritomo extendido de Euclides', z
+def main():
+    print 'Bienvenido al sistema de encriptación RSA \n    Por favor seleccione una opción'
+    print '\n1.Encriptar \n2.Desencripar \n3.Salir'
+    menu = {'1': 'Encriptar', '2': 'Desencriptar', '3': 'Salir'}
+    T= int (sys.stdin.readline())
+    if (T == 1):
+        encriptar()
+    elif (T== 2):
+        desencriptar()
+    else:
+        print 'Hasta pronto :D'
+
+def test():   
+    a = 79
+    b = 3220
+    w = gcd(a,b)
+    print 'Primos relativos ' , w
+    z = eea(b,a)
+    print 'Algoritomo extendido de Euclides', z
+
+main()
+
