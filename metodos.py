@@ -3,16 +3,13 @@ import random
 archivo=open("primos.txt")
 lineas=len(open("primos.txt").readlines())
 
-print(lineas)
+print 'Número de lineas', lineas
 plinea=random.randrange(268)
 qlinea=random.randrange(268)
 while(plinea==qlinea):
      qlinea=random.randrange(268)
-
-
 print(plinea)
 print(qlinea)
-
 for i in range(lineas):
      if i==plinea:
           p=archivo.next()
@@ -22,7 +19,6 @@ for i in range(lineas):
           else:
                archivo.next()
 archivo.close()
-
 print('Numero p y q: ')
 print(p)
 print(q)
@@ -42,17 +38,20 @@ lbinario=listabinario(10949)
 print(lbinario)
 n=27641
 
-def powermod(numero):
-    base=numero
+def powermod(mc,ed,n):
+    base = mc
+    lbinario = listabinario(ed);
     del lbinario[0]
+    if ed < 0:
+         del lbinario[0]
     for i in lbinario:
         if i=='1':
             print("entro a 1")
-            numero=(numero*numero*base)%n
+            mc = (mc*mc*base)% n
         else:
             print("entro a 0")
-            numero=(numero*numero)%n
-        print("el valor de i es: " ,i ," el numero es: ",numero)
-    return numero
+            mc=(mc*mc)%n
+        print("el valor de i es: " ,i ," el numero es: ",mc)
+    return mc
 
 print(powermod(45))
