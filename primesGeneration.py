@@ -15,8 +15,11 @@ def esprimo(numero):
     else:
         return 0
 
-limite=20000700
-inicio=19999700
+#limite=20000700
+#inicio=19999700
+
+limite=5000
+inicio=0
 
 
 def generarprimos():

@@ -11,9 +11,12 @@ def powerMod(mc,ed,n):
          del lbinario[0]
     for i in lbinario:
         if i=='1':
-            mc = (mc*mc*base)% n
+            mc = (mc*mc)%n
+            mc = (mc*base)%n
         else:
             mc=(mc*mc)%n
+        #print 'el valor de cada iteracion es: ',mc
+        #print 'para bit: ' ,i
     return mc
 
 def listaBinario(ed):
@@ -26,6 +29,36 @@ def listaBinario(ed):
     return lista
 
 def descomponer(n):
+    for i in range(2,n):
+        if esprimo(i):
+            if n%i==0:
+                temp=n/i
+                if esprimo(temp):
+                    p=i
+                    q=temp
+                    break
+    return p, q
+
+
+def esprimo(numero):
+    contador=0
+    verificar= False
+    for i in range(1,numero+1):
+        if (numero%i)==0:
+            contador=contador+1
+        if contador >= 3:
+            verificar=True
+            break
+    if contador==2 or verificar==False:
+        return 1
+    else:
+        return 0
+
+def encontrarD(n,e):
+    p,q = descomponer(n)
+    phi = (p-1)*(q-1)
+    d = eea(phi,e)
+    return d
     
 
 #...Encriptación y desencriptación
@@ -115,13 +148,13 @@ def encriptar():
     print '\nAQUI SE VA A ENCRIPTAR'
     print 'Ingrese el texto que desea cifrar \nInstrucciones: ingrese los números separados entre sí por un espacio \nal terminar de ingresar el mensaje presione enter y obtendrá un mensaje cifrado.'
     tp = sys.stdin.readline().strip().split()
-    for i in range(len(ent)):
-        textoPlano.append(int(ent[i]))
+    for i in range(len(tp)):
+        textoPlano.append(int(tp[i]))
     e,d,n = generarLlave()
     for i in range(len(textoPlano)):
         m = textoPlano[i]
         c.append(powerMod (m,e,n))
-    print '\nMensaje cifrado: \n'
+    print '\nMensaje cifrado: \n' 
     for i in range(len(c)):
         print c[i]
     
@@ -134,11 +167,20 @@ def desencriptar():
     llaveP = sys.stdin.readline().strip().split()
     e = int(llaveP[0])
     n = int(llaveP[1])
+    #print'Ingrese la llave privada (cada término separado por un espacio (d,n))'
+    #llave = sys.stdin.readline().strip().split()
+    #d = int(llave[0])
     print 'Ingrese el texto cifrado \nInstrucciones: ingrese los números separados entre sí por un espacio \nal terminar de ingresar el mensaje presione enter y obtendrá el mensaje original.'
     ent = sys.stdin.readline().strip().split()
     for i in range(len(ent)):
         c.append(int(ent[i]))
-    
+    d = encontrarD(n,e)
+    for i in range(len(c)):
+        temp = c[i]
+        textoPlano.append(powerMod(temp,d,n))
+    print '\nMensaje original: \n'
+    for i in range(len(textoPlano)):
+        print textoPlano[i]
 
 def main():
     try:
@@ -168,5 +210,24 @@ def test():
     print 'Primos relativos ' , w
     z = eea(b,a)
     print 'Algoritomo extendido de Euclides', z
-
+    e=79
+    d=1019
+    n=3337
+    c = []
+    mo = []
+    #m =[688,232,687,966,668,3]
+    m =[8768667] 
+    for i in range (len(m)):
+        mu = m[i]
+        c.append(powerMod(mu,e,n))
+    print '\nMensaje cifrado: \n' 
+    for i in range(len(c)):
+        print c[i]
+    for i in range (len(c)):
+        cu = c[i]
+        mo.append(powerMod(cu,d,n))
+    print '\nMensaje original: \n' 
+    for i in range(len(mo)):
+        print mo[i]
+           
 main()
