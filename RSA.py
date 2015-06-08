@@ -15,8 +15,6 @@ def powerMod(mc,ed,n):
             mc = (mc*base)%n
         else:
             mc=(mc*mc)%n
-        #print 'el valor de cada iteracion es: ',mc
-        #print 'para bit: ' ,i
     return mc
 
 def listaBinario(ed):
@@ -133,8 +131,7 @@ def eea(phi,e):
 #...Generar llave
 
 def generarLlave():
-    p,q = numPrimos() 
-    print p, q
+    p,q = numPrimos()
     n = p * q
     phi = (p-1)*(q-1)
     e = aleatorioE(phi)
@@ -144,22 +141,45 @@ def generarLlave():
     return e,d,n 
 
 def encriptar():
-    ent=[]
-    textoPlano = []
-    c = []
-    print '\nAQUI SE VA A ENCRIPTAR'
-    print 'Ingrese el texto que desea cifrar \nInstrucciones: ingrese los números separados entre sí por un espacio \nal terminar de ingresar el mensaje presione enter y obtendrá un mensaje cifrado.'
-    tp = sys.stdin.readline().strip().split()
-    for i in range(len(tp)):
-        textoPlano.append(int(tp[i]))
-    e,d,n = generarLlave()
-    
-    for i in range(len(textoPlano)):
-        m = textoPlano[i]
-        c.append(powerMod (m,e,n))
-    print '\nMensaje cifrado: \n' 
-    for i in range(len(c)):
-        print c[i]
+    try:
+        ent=[]
+        textoPlano = []
+        c = []
+        print '\nAQUÍ SE VA A ENCRITAR'
+        print '\nSeleccione una opción de entrada'
+        print '\n1.Texto'
+        print '2.Números decimales'
+        op = int(input())
+        if op == 2:
+            print 'Ingrese el texto que desea cifrar \nInstrucciones: ingrese los números separados entre sí por un espacio \nal terminar de ingresar el mensaje presione enter y obtendrá un mensaje cifrado.'
+            tp = sys.stdin.readline().strip().split()
+            for i in range(len(tp)):
+                textoPlano.append(int(tp[i]))
+        elif op == 1:
+            print 'Ingrese el texto que desea cifrar \nInstrucciones: al terminar de ingresar el mensaje presione enter y obtendrá un mensaje cifrado.'
+            tp = sys.stdin.readline().strip().split()
+            palabras = []
+            for i in range(len(tp)):
+                palabras.append(tp[i])
+            for i in range(len(palabras)):
+              for j in range(len(palabras[i])):
+                textoPlano.append(ord(palabras[i][j]))     
+        else:
+            print'Opción inválida\nIntente de nuevo \n\n'
+            encriptar()           
+
+        e,d,n = generarLlave()
+        for i in range(len(textoPlano)):
+            m = textoPlano[i]
+            c.append(powerMod (m,e,n))
+        print '\nMensaje cifrado: \n' 
+        for i in range(len(c)):
+                print c[i]
+          
+    except ValueError:
+        print'Opción inválida\nIntente de nuevo \n\n'
+        encriptar() 
+
     
 def desencriptar():
     try:
@@ -169,17 +189,17 @@ def desencriptar():
         print '\nAQUÍ SE VA A DESENCRITAR'
         print '\nSelecciones el modo de desencriptar'
         print '\n1. Ingresando la llave pública y la llave privada'
-        print '\n2. Ingresando únicamente la llave pública'
-        n = int(input())
+        print '2. Ingresando únicamente la llave pública'
+        op = int(input())
         print'Ingrese la llave pública (cada término separado por un espacio (e,n))'
         llaveP = sys.stdin.readline().strip().split()
         e = int(llaveP[0])
         n = int(llaveP[1])
-        if n == 1:
+        if op == 1:
             print'Ingrese la llave privada (cada término separado por un espacio (d,n))'
             llave = sys.stdin.readline().strip().split()
             d = int(llave[0])
-        elif n == 0:
+        elif op == 2:
             d = encontrarD(n,e)
         else:
             print'Opción inválida\nIntente de nuevo \n\n'
@@ -192,8 +212,12 @@ def desencriptar():
             temp = c[i]
             textoPlano.append(powerMod(temp,d,n))
         print '\nMensaje original: \n'
-        for i in range(len(textoPlano)):
-            print textoPlano[i]
+        try:
+            for i in range(len(textoPlano)):
+                print chr(textoPlano[i])
+        except ValueError:
+            for i in range(len(textoPlano)):
+                print textoPlano[i]
     except ValueError:
         print'Opción inválida\nIntente de nuevo \n\n'
         desencriptar()    
@@ -217,33 +241,6 @@ def main():
     except ValueError:
         print'Opción inválida\nIntente de nuevo \n\n'
         main()
-
-def test():   
-    a = 79
-    b = 3220
-    w = gcd(a,b)
-    print 'Primos relativos ' , w
-    z = eea(b,a)
-    print 'Algoritomo extendido de Euclides', z
-    e=79
-    d=1019
-    n=3337
-    c = []
-    mo = []
-    #m =[688,232,687,966,668,3]
-    m =[8768667] 
-    for i in range (len(m)):
-        mu = m[i]
-        c.append(powerMod(mu,e,n))
-    print '\nMensaje cifrado: \n' 
-    for i in range(len(c)):
-        print c[i]
-    for i in range (len(c)):
-        cu = c[i]
-        mo.append(powerMod(cu,d,n))
-    print '\nMensaje original: \n' 
-    for i in range(len(mo)):
-        print mo[i]
            
 main()
 
