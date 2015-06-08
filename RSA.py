@@ -145,7 +145,7 @@ def encriptar():
         ent=[]
         textoPlano = []
         c = []
-        print '\nAQUÍ SE VA A ENCRITAR'
+        print '\nAQUÍ SE VA A ENCRIPTAR'
         print '\nSeleccione una opción de entrada'
         print '\n1.Texto'
         print '2.Números decimales'
@@ -186,7 +186,7 @@ def desencriptar():
         ent=[]
         textoPlano = []
         c = []
-        print '\nAQUÍ SE VA A DESENCRITAR'
+        print '\nAQUÍ SE VA A DESENCRIPTAR'
         print '\nSelecciones el modo de desencriptar'
         print '\n1. Ingresando la llave pública y la llave privada'
         print '2. Ingresando únicamente la llave pública'
