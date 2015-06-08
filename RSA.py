@@ -194,7 +194,10 @@ def desencriptar():
         print '\nMensaje original: \n'
         for i in range(len(textoPlano)):
             print textoPlano[i]
-
+    except ValueError:
+        print'Opción inválida\nIntente de nuevo \n\n'
+        desencriptar()    
+    
 def main():
     try:
         print '\nBienvenido al sistema de encriptación RSA \n    Por favor seleccione una opción'
@@ -242,5 +245,6 @@ def test():
     for i in range(len(mo)):
         print mo[i]
            
+main()
 
 
