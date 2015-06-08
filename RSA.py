@@ -104,6 +104,7 @@ def gcd(e,phi):
         return gcd(phi,r)
 
 def eea(phi,e):
+    phiTemp= phi
     listaPhi=[]
     listaE=[]
     listaR=[]
@@ -127,12 +128,13 @@ def eea(phi,e):
         y =  (-(a*x)+1)/b
         x = y
         i = i -1
-    return y
+    return y%phiTemp
 
 #...Generar llave
 
 def generarLlave():
-    p,q = numPrimos()
+    p,q = numPrimos() 
+    print p, q
     n = p * q
     phi = (p-1)*(q-1)
     e = aleatorioE(phi)
@@ -151,6 +153,7 @@ def encriptar():
     for i in range(len(tp)):
         textoPlano.append(int(tp[i]))
     e,d,n = generarLlave()
+    
     for i in range(len(textoPlano)):
         m = textoPlano[i]
         c.append(powerMod (m,e,n))
@@ -159,34 +162,43 @@ def encriptar():
         print c[i]
     
 def desencriptar():
-    ent=[]
-    textoPlano = []
-    c = []
-    print '\nAQUI SE VA A DESENCRITAR'
-    print'Ingrese la llave pública (cada término separado por un espacio (e,n))'
-    llaveP = sys.stdin.readline().strip().split()
-    e = int(llaveP[0])
-    n = int(llaveP[1])
-    #print'Ingrese la llave privada (cada término separado por un espacio (d,n))'
-    #llave = sys.stdin.readline().strip().split()
-    #d = int(llave[0])
-    print 'Ingrese el texto cifrado \nInstrucciones: ingrese los números separados entre sí por un espacio \nal terminar de ingresar el mensaje presione enter y obtendrá el mensaje original.'
-    ent = sys.stdin.readline().strip().split()
-    for i in range(len(ent)):
-        c.append(int(ent[i]))
-    d = encontrarD(n,e)
-    for i in range(len(c)):
-        temp = c[i]
-        textoPlano.append(powerMod(temp,d,n))
-    print '\nMensaje original: \n'
-    for i in range(len(textoPlano)):
-        print textoPlano[i]
+    try:
+        ent=[]
+        textoPlano = []
+        c = []
+        print '\nAQUÍ SE VA A DESENCRITAR'
+        print '\nSelecciones el modo de desencriptar'
+        print '\n1. Ingresando la llave pública y la llave privada'
+        print '\n2. Ingresando únicamente la llave pública'
+        n = int(input())
+        print'Ingrese la llave pública (cada término separado por un espacio (e,n))'
+        llaveP = sys.stdin.readline().strip().split()
+        e = int(llaveP[0])
+        n = int(llaveP[1])
+        if n == 1:
+            print'Ingrese la llave privada (cada término separado por un espacio (d,n))'
+            llave = sys.stdin.readline().strip().split()
+            d = int(llave[0])
+        elif n == 0:
+            d = encontrarD(n,e)
+        else:
+            print'Opción inválida\nIntente de nuevo \n\n'
+            desencriptar()
+        print 'Ingrese el texto cifrado \nInstrucciones: ingrese los números separados entre sí por un espacio \nal terminar de ingresar el mensaje presione enter y obtendrá el mensaje original.'
+        ent = sys.stdin.readline().strip().split()
+        for i in range(len(ent)):
+            c.append(int(ent[i]))
+        for i in range(len(c)):
+            temp = c[i]
+            textoPlano.append(powerMod(temp,d,n))
+        print '\nMensaje original: \n'
+        for i in range(len(textoPlano)):
+            print textoPlano[i]
 
 def main():
     try:
         print '\nBienvenido al sistema de encriptación RSA \n    Por favor seleccione una opción'
         print '\n1.Encriptar \n2.Desencripar \n3.Salir'
-        menu = {'1': 'Encriptar', '2': 'Desencriptar', '3': 'Salir'}
         T= int(sys.stdin.readline())
         if (T==1):
             encriptar()
@@ -200,7 +212,7 @@ def main():
             print 'Opcion inválida\nIntente de nuevo \n\n'
             main()
     except ValueError:
-        print'Opción inválida\nIntente denuevo \n\n'
+        print'Opción inválida\nIntente de nuevo \n\n'
         main()
 
 def test():   
@@ -230,4 +242,5 @@ def test():
     for i in range(len(mo)):
         print mo[i]
            
-main()
+
+
